@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <title>01 - Qué es Vue</title>
+</head>
+<body>
+    <div id="app">
+        <form action="" v-on:submit.prevent="guardarTarea">
+            <label>Elemento
+                <input v-model="nuevaTarea" type="text">
+            </label>
+            <input type="submit" value="Guardar">
+        </form>
+
+        <hr>
+        <ul>
+            <li v-for="tarea in tareas">{{tarea}}</li>
+        </ul>
+
+        <pre>{{ $data }}</pre>
+    </div>
+</body>
+
+<script>
+
+    new Vue({
+        el: "#app",
+        data: {
+            nuevaTarea: '',
+            tareas: [],
+        },
+        methods: {
+            guardarTarea(){
+                this.tareas.push(this.nuevaTarea);
+                this.nuevaTarea = '';
+            }
+        }
+
+    });
+
+    /*const formulario = document.querySelector('form');
+    const ul = document.querySelector('ul');
+    const input = document.querySelector("input[type='text']");
+    const tareas = [];
+
+    formulario.onsubmit = evento => {
+        evento.preventDefault();
+        tareas.push(input.value);
+
+        var li = document.createElement('li');
+        li.textContent = input.value;
+        ul.appendChild(li);
+        input.value = null;
+
+        console.log(tareas);
+    }*/
+</script>
+</html>
