@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <title>03 - Atributos dinámicos</title>
+</head>
+<body>
+    <div id="app">
+        <input v-model="ancho" type="range">Ancho
+        <br>
+        <input v-model="alto" type="range">Alto
+        <br>
+        {{urlCompleta}}
+        <br>
+        <img v-bind:src="urlCompleta" alt="Imagen de gatetes">
+<!--        <input type="text" v-model="enlace">-->
+<!--        <a v-bind:href="enlace">{{enlace}}</a>-->
+    </div>
+</body>
+
+<script>
+
+    const app = new Vue({
+        el: "#app",
+        data: {
+            enlace: "https://www.vuejs.org",
+            baseUrl: "https://placekitten.com",
+            ancho: "50",
+            alto: "50",
+        },
+        methods: {
+
+        },
+        computed: {
+            urlCompleta(){
+                return `${this.baseUrl}/${this.ancho * 3}/${this.alto * 3}`;
+            }
+
+        }
+
+    });
+
+    Vue.config.devtools = true;
+
+    /*const formulario = document.querySelector('form');
+    const ul = document.querySelector('ul');
+    const input = document.querySelector("input[type='text']");
+    const tareas = [];
+
+    formulario.onsubmit = evento => {
+        evento.preventDefault();
+        tareas.push(input.value);
+
+        var li = document.createElement('li');
+        li.textContent = input.value;
+        ul.appendChild(li);
+        input.value = null;
+
+        console.log(tareas);
+    }*/
+</script>
+</html>
