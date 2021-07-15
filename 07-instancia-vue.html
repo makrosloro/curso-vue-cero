@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>07 - La instancia Vue</title>
+</head>
+<body>
+    <div id="app">
+        <li v-for="usuario in usuarios">{{usuario.name}}</li>
+        <pre>{{ $data }}</pre>
+    </div>
+</body>
+
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+
+    const vm = new Vue({
+        created(){
+            var url = "https://jsonplaceholder.typicode.com/users";
+            fetch(url)
+                .then(respuesta => respuesta.json())
+                    .then(respuesta => this.usuarios = respuesta)
+        },
+        el: "#app",
+        data: {
+            usuarios: [],
+        },
+    });
+
+    Vue.config.devtools = true;
+</script>
+</html>
