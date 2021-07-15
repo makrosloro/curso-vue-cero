@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>10 - Filtros Vue</title>
+</head>
+<body>
+    <main id="app">
+        <form @submit.prevent="guardarTarea">
+            <input v-model="nuevaTarea" type="text" placeholder="Tarea">
+            <input type="submit" value="Enviar">
+        </form>
+        <ul>
+            <li v-for="tarea in tareas">{{tarea.title}}</li>
+        </ul>
+    </main>
+</body>
+
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+    const vm = new Vue({
+        el: "#app",
+        mounted(){
+            axios.get(this.url)
+                .then(respuesta => this.tareas = respuesta.data)
+                .catch(error => console.error(error));
+        },
+        data: {
+            url: "https://jsonplaceholder.typicode.com/todos",
+            tareas: [],
+            nuevaTarea: '',
+        },
+        methods: {
+            guardarTarea(){
+                axios.post(this.url, {
+                   title: this.nuevaTarea,
+                   userId: Math.floor(Math.random() * 10) + 1
+                })
+                .then(respuesta => {
+                    console.log(respuesta);
+                    this.tareas.unshift({
+                        title: this.nuevaTarea
+                    });
+                    this.nuevaTarea = null;
+                })
+                .catch(error => console.error(error))
+            }
+        },
+    });
+
+    Vue.config.devtools = true;
+</script>
+</html>
