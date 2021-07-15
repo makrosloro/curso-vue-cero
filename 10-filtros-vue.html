@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>10 - Filtros Vue</title>
+</head>
+<body>
+    <main id="app">
+        <ul>
+            <li v-for="usuario in nombreCompleto">{{usuario | mayusculas | acortado(15)}}</li>
+        </ul>
+    </main>
+</body>
+
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+
+    const vm = new Vue({
+        created(){
+            fetch(this.url)
+                .then(respuesta => respuesta.json())
+                    .then(respuesta => this.usuarios = respuesta.results.map(usuario => usuario.name))
+        },
+        el: "#app",
+        data: {
+            url: "https://randomuser.me/api/?results=50",
+            usuarios: [],
+        },
+        computed: {
+            nombreCompleto() {
+                return this.usuarios.map(usuario => `Nombre: ${usuario.title} ${usuario.first} ${usuario.last}`);
+            }
+        },
+        filters: {
+            mayusculas(datos){
+                return datos.toUpperCase();
+            },
+            acortado(datos, cantidad){
+                return datos.substr(0, cantidad) + '...';
+            }
+        }
+    });
+
+    Vue.config.devtools = true;
+</script>
+</html>
