@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>07 - Vue Watchers</title>
+</head>
+<body>
+<div id="app">
+    <h3> Cambia tu contraseña</h3>
+    <input type="text" v-model="password">
+    <br>
+    <p>{{estado}}</p>
+</div>
+</body>
+
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            password: '',
+            estado: 'Introduce una contraseña...',
+            novalidos: [
+                '12345',
+                'admin',
+                'password',
+            ]
+        },
+        watch: {
+            password(nuevo, antiguo){
+                if (this.novalidos.indexOf(nuevo) > -1){
+                    this.estado = 'Contraseña no válida';
+                    return false;
+                }
+
+                if (nuevo.length < 5){
+                    this.estado = 'Contraseña demasiado corta. Debe tener al menos 5 caracteres';
+                    return false;
+                }
+
+                this.estado = 'Contraseña correcta';
+            }
+        }
+
+    });
+
+    Vue.config.devtools = true;
+</script>
+</html>
