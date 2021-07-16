@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>14 - Introducción a componentes</title>
+
+</head>
+<body>
+    <main id="app">
+        <post v-for="post in posts" :articulo="post"></post>
+    </main>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+    Vue.component('post', {
+        props: ['articulo'],
+        template: `<article class="post">
+            <h2 class="post_titulo">{{articulo.titulo}}</h2>
+            <p class="post_contenido">{{articulo.contenido}}</p>
+            </article>`
+    });
+
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            posts: [
+                {
+                    titulo: "Título artículo 1",
+                    contenido: "Lorem fistrum officia sed veniam et tempor pupita minim laboris. Ex ese pedazo de dolor sexuarl enim occaecat aute ese pedazo de. Aliquip ahorarr tempor ex sexuarl irure condemor. Elit amatomaa tempor adipisicing te va a hasé pupitaa torpedo voluptate ut quietooor ese pedazo de pupita. No te digo trigo por no llamarte Rodrigor se calle ustée ex cillum apetecan. Llevame al sircoo ese pedazo de está la cosa muy malar sed mamaar ut al ataquerl qui eiusmod. De la pradera diodenoo de la pradera qué dise usteer nostrud la caidita apetecan tiene musho peligro."
+                },
+                {
+                    titulo: "Título artículo 2",
+                    contenido: "Lorem fistrum officia sed veniam et tempor pupita minim laboris. Ex ese pedazo de dolor sexuarl enim occaecat aute ese pedazo de. Aliquip ahorarr tempor ex sexuarl irure condemor. Elit amatomaa tempor adipisicing te va a hasé pupitaa torpedo voluptate ut quietooor ese pedazo de pupita. No te digo trigo por no llamarte Rodrigor se calle ustée ex cillum apetecan. Llevame al sircoo ese pedazo de está la cosa muy malar sed mamaar ut al ataquerl qui eiusmod. De la pradera diodenoo de la pradera qué dise usteer nostrud la caidita apetecan tiene musho peligro."
+                },
+                {
+                    titulo: "Título artículo 3",
+                    contenido: "Lorem fistrum officia sed veniam et tempor pupita minim laboris. Ex ese pedazo de dolor sexuarl enim occaecat aute ese pedazo de. Aliquip ahorarr tempor ex sexuarl irure condemor. Elit amatomaa tempor adipisicing te va a hasé pupitaa torpedo voluptate ut quietooor ese pedazo de pupita. No te digo trigo por no llamarte Rodrigor se calle ustée ex cillum apetecan. Llevame al sircoo ese pedazo de está la cosa muy malar sed mamaar ut al ataquerl qui eiusmod. De la pradera diodenoo de la pradera qué dise usteer nostrud la caidita apetecan tiene musho peligro."
+                },
+            ]
+
+        }
+    });
+
+    vm.$watch('form', (nuevo, antiguo) => {
+        window.localStorage.setItem('form', JSON.stringify(nuevo));
+    }, {deep: true});
+
+    Vue.config.devtools = true;
+</script>
+</html>
