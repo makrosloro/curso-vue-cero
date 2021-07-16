@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>13 - Data binding en formularios</title>
+
+    <style>
+        form {
+            font-family: sans-serif;
+        }
+
+        input:not([type="radio"]),
+        textarea,
+        label,
+        select {
+            display: block;
+        }
+
+        label,
+        input[type="submit"] {
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        input,
+        textarea,
+        select {
+            min-width: 200px;
+        }
+
+        .invalido {
+            border: 1px solid red;
+        }
+    </style>
+
+</head>
+<body>
+    <main id="app">
+        <form>
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" id="nombre" required v-model="form.nombre" :class="{invalido: !form.nombre}">
+            <label for="apellidos">Apellidos</label>
+            <input type="text" name="apellidos" id="apellidos" required v-model="form.apellidos" :class="{invalido: !form.apellidos}">
+
+            <label for="mensaje"></label>
+            <textarea name="mensaje" id="mensaje" cols="30" rows="10" v-model="form.mensaje" :class="{invalido: !form.mensaje}"></textarea>
+
+            <label for="">Hora de contacto</label>
+            <span>Mañanas</span>
+            <input type="radio" name="hora" value="mañanas" v-model="form.contacto">
+            <br>
+            <span>Tardes</span>
+            <input type="radio" name="hora" value="tardes" v-model="form.contacto">
+            <br>
+            <span>Noches</span>
+            <input type="radio" name="hora" value="noches" v-model="form.contacto">
+
+            <label for="productos">Productos</label>
+            <select name="productos" id="productos" v-model="form.productos" multiple>
+                <option value="producto1">Producto 1</option>
+                <option value="producto2">Producto 2</option>
+                <option value="producto3">Producto 3</option>
+            </select>
+
+            <label for="acepta">Aceptación de los términos de uso.</label>
+            <span>Acepto los terminos de uso de la web</span>
+            <input type="checkbox" name="acepta" id="acepta" v-model="form.acepta">
+
+            <input type="submit" value="Enviar" v-if="form.acepta">
+            
+        </form>
+        <hr>
+        <pre>{{ $data }}</pre>
+    </main>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+    const vm = new Vue({
+        el: "#app",
+        mounted(){
+            if (window.localStorage.getItem('form'))
+                this.form = JSON.parse(window.localStorage.getItem('form'));
+        },
+        data: {
+            form: {
+                nombre: '',
+                apellidos: '',
+                mensaje: '',
+                contacto: 'tardes',
+                productos: [],
+                acepta: false,
+            }
+        },
+        computed: {
+
+        }
+    });
+
+    vm.$watch('form', (nuevo, antiguo) => {
+        window.localStorage.setItem('form', JSON.stringify(nuevo));
+    }, {deep: true});
+
+    Vue.config.devtools = true;
+</script>
+</html>
